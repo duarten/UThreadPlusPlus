@@ -326,34 +326,34 @@ __declspec(naked) void __fastcall context_switch(UThread *currentThread, UThread
         // been placed there by the call to this function.
         //
 
-        push	ebp
-        push	ebx
-        push	esi
-        push	edi
+        push    ebp
+        push    ebx
+        push    esi
+        push    edi
 
         //
         // Save ESP in currentThread->m_pContext.
         //
 
-        mov		dword ptr [ecx + UThread::m_pContext], esp
+        mov     dword ptr [ecx + UThread::m_pContext], esp
 
         //
         // Set nextThread as the running thread.
         //
 
-        mov		UScheduler::m_pRunningThread, edx		
+        mov     UScheduler::m_pRunningThread, edx		
 
         //
         // Load nextThread's context, starting by switching to its stack,  
         // where the registers are saved.
         //
 
-        mov		esp, dword ptr [edx + UThread::m_pContext]
+        mov     esp, dword ptr [edx + UThread::m_pContext]
         
-        pop		edi
-        pop		esi
-        pop		ebx
-        pop		ebp
+        pop     edi
+        pop     esi
+        pop     ebx
+        pop     ebp
 
         //
         // Jump to the return address saved on nextThread's stack when 
@@ -378,7 +378,7 @@ __declspec(naked) void __fastcall internal_exit(UThread *currentThread, UThread 
         // Set nextThread as the running thread.
         //
 
-        mov		UScheduler::m_pRunningThread, edx
+        mov     UScheduler::m_pRunningThread, edx
 
         //
         // Load nextThread's stack pointer before calling UThread::self_destroy(): 
@@ -386,7 +386,7 @@ __declspec(naked) void __fastcall internal_exit(UThread *currentThread, UThread 
         // same memory being freed -- the stack.
         //
 
-        mov		esp, dword ptr [edx + UThread::m_pContext]
+        mov     esp, dword ptr [edx + UThread::m_pContext]
 
         call    UThread::self_destroy
 
@@ -394,10 +394,10 @@ __declspec(naked) void __fastcall internal_exit(UThread *currentThread, UThread 
         // Finish switching in nextThread.
         //
 
-        pop		edi
-        pop		esi
-        pop		ebx
-        pop		ebp
+        pop     edi
+        pop     esi
+        pop     ebx
+        pop     ebp
 
         ret
     }
